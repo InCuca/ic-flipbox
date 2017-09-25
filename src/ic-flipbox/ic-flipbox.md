@@ -1,3 +1,6 @@
-Put here the ic-flipbox component usage instructions
+Component usage
 
-    <ic-flipbox text="Hello World!"></ic-flipbox>
+    <ic-flipbox>
+      <div slot="front-content">My Front Content</div>
+      <div slot="back-content">My Back Content</div>
+    </ic-flipbox>

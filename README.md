@@ -1,10 +1,13 @@
 # ic-flipbox
 
-> A flipbox div with option for a button
+> A flipabble element
 
 # Usage
 
-    <ic-flipbox text="Hello World!"></ic-flipbox>
+    <ic-flipbox>
+      <div slot="front-content">My Front Content</div>
+      <div slot="back-content">My Back Content</div>
+    </ic-flipbox>
 
 ## Installation
 
