@@ -2,8 +2,8 @@
   <div
     :class="containerClasses"
     :style="containerStyle"
-    @mouseover="onMouseOver"
-    @mouseout="onMouseOut">
+    @mouseenter="onMouseEnter"
+    @mouseleave="onMouseLeave">
     <div :style="childStyle" class="flipbox-face flipbox-face-front">
       <slot name="front-content"></slot>
     </div>
@@ -67,11 +67,12 @@ export default {
     },
   },
   methods: {
-    onMouseOver() {
+    onMouseEnter() {
+      console.trace('here');
       this.isFlipped = true;
       this.$emit('ic-flipbox-flip', {flip: this.isFlipped});
     },
-    onMouseOut() {
+    onMouseLeave() {
       this.isFlipped = false;
       this.$emit('ic-flipbox-flip', {flip: this.isFlipped});
     },
