@@ -1,6 +1,7 @@
 <template lang="html">
   <div
-    class="{flipbox: true, 'flipbox-flipped': isFlipped}"
+    :class="containerClasses"
+    :style="containerStyle"
     @mouseover="onMouseOver"
     @mouseout="onMouseOut">
     <div class="flipbox-front">
@@ -13,6 +14,7 @@
 </template>
 
 <script>
+
 /**
  * Component documentation
  */
@@ -27,11 +29,10 @@ export default {
     /**
      * The component max perspective,
      * how much the element will zoom while
-     * animating
+     * animating, default to not change perspective
      */
     perspective: {
-      type: String,
-      default: '600px',
+      type: String
     },
     /**
      * Set flip state here
@@ -41,27 +42,40 @@ export default {
       default: false,
     }
   },
-  methods: {
-    onMouseOver() {
-      //FIXME: neither emit or filpState change are working
-      this.flipState = true;
-      console.log('over', this.flipState);
-      this.$emit('ic-flipbox-flip');
+  watch: {
+    flip: function(flipValue) {
+      this.isFlipped = flipValue;
+    }
+  },
+  computed: {
+    containerClasses: function() {
+      return {
+        'flipbox': true,
+        'flipbox-flipped': this.isFlipped,
+      }
     },
-    onMouseOut() {
-      //FIXME: neither emit or filpState change are working
-      this.flipState = false;
-      console.log('out', this.flipState);
-      this.$emit('ic-flipbox-notflip');
+    containerStyle: function() {
+      let style = {};
+      if (this.perspective) style['perspective'] = this.perspective;
+      return style;
     },
   },
+  methods: {
+    onMouseOver() {
+      this.isFlipped = true;
+      this.$emit('ic-flipbox-flip', {flip: this.isFlipped});
+    },
+    onMouseOut(){
+      this.isFlipped = false;
+      this.$emit('ic-flipbox-flip', {flip: this.isFlipped});
+    },
+  }
 }
 </script>
 
 <style scoped>
   .flipbox {
     position: relative;
-    perspective: 600px;
   }
 
   .flipbox .flipbox-front {
@@ -85,10 +99,12 @@ export default {
   }
 
   .flipbox.flipbox-flipped .flipbox-front {
+    z-index: 900;
     transform: rotateY(180deg);
   }
 
   .flipbox.flipbox-flipped .flipbox-back {
+    z-index: 1000;
     transform: rotateX(0deg);
   }
 </style>

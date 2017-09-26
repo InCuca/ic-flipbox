@@ -1,6 +1,6 @@
 Component usage
 
     <ic-flipbox>
-      <div slot="front-content">My Front Content</div>
-      <div slot="back-content">My Back Content</div>
+      <a slot="front-content" href="#">My Front Content</a>
+      <a slot="back-content" href="#">My Back Content</a>
     </ic-flipbox>
