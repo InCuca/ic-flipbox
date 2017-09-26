@@ -78,9 +78,19 @@ export default {
     recalcContainer() {
       this.childStyle['position'] = 'static';
       Vue.nextTick().then(() => {
-        let rect = this.$el.getBoundingClientRect();
-        this.containerWidth = rect.width;
-        this.containerHeight = rect.height;
+        let childRects = Array
+          .from(this.$el.children)
+          .map(el => el.getBoundingClientRect());
+        let biggestWidth = Math.max.apply(
+          null,
+          childRects.map(r => r.width)
+        );
+        let biggestHeight = Math.max.apply(
+          null,
+          childRects.map(r => r.height)
+        );
+        this.containerWidth = biggestWidth;
+        this.containerHeight = biggestHeight;
         this.childStyle['position'] = 'absolute';
       });
     }
