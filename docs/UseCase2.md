@@ -4,22 +4,25 @@ Interacting and listening for events
 new Vue({
   data() {
     return {
-      cardOpen: false,
-      myLog: {
-        type: Array,
-        default: [],
-      }
+      cardOpen: false
     }
+  },
+  methods: {
+    onCardFlip(event) {
+      this.cardOpen = event.flip;
+    },
   },
   template: `
     <div>
-      <h1>Current Status: {{cardOpen}}</h1>
-      <ul><li v-for="event in myLog">Flip Event {{event.flip}}</li></ul>
-      <ic-flipbox :flip="cardOpen" @ic-flipbox-flip="myLog.push($event)">
+      <button @click="cardOpen = !cardOpen">
+        Click to Flip
+      </button>
+      <p>Flipped? {{cardOpen}}</p>
+      <ic-flipbox
+      :flip="cardOpen"
+      @ic-flipbox-flip="onCardFlip">
         <div slot="front-content">My Front Content</div>
-        <button
-          @click="cardOpen = false"
-          slot="back-content">Close</button>
+        <div slot="back-content">My Back Content</div>
       </ic-flipbox>
     </div>
   `

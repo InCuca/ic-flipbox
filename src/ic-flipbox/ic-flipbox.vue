@@ -87,6 +87,20 @@ export default {
   },
   mounted() {
     this.recalcContainer();
+
+    // Setup a mutation observer on children
+    this.childObserver = new MutationObserver(
+      this.recalcContainer.bind(this)
+    );
+    let children = Array.from(this.$el.children);
+    children.forEach(child => {
+      this.childObserver.observe( child, {
+        attributes: true,
+        childList: true,
+        characterData: true,
+        subtree: true
+      });
+    });
   },
 }
 </script>
