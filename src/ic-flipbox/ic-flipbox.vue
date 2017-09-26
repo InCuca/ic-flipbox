@@ -4,16 +4,17 @@
     :style="containerStyle"
     @mouseover="onMouseOver"
     @mouseout="onMouseOut">
-    <div class="flipbox-front">
+    <div :style="childStyle" class="flipbox-face flipbox-face-front">
       <slot name="front-content"></slot>
     </div>
-    <div class="flipbox-back">
+    <div :style="childStyle" class="flipbox-face flipbox-face-back">
       <slot name="back-content"></slot>
     </div>
   </div>
 </template>
 
 <script>
+import Vue from 'vue';
 
 /**
  * Component documentation
@@ -23,6 +24,9 @@ export default {
   data: function() {
     return {
       isFlipped: this.flip,
+      containerWidth: null,
+      containerHeight: null,
+      childStyle: {},
     }
   },
   props: {
@@ -57,6 +61,8 @@ export default {
     containerStyle: function() {
       let style = {};
       if (this.perspective) style['perspective'] = this.perspective;
+      if (this.containerWidth) style['width'] = this.containerWidth + 'px';
+      if (this.containerHeight) style['height'] = this.containerHeight + 'px';
       return style;
     },
   },
@@ -65,45 +71,54 @@ export default {
       this.isFlipped = true;
       this.$emit('ic-flipbox-flip', {flip: this.isFlipped});
     },
-    onMouseOut(){
+    onMouseOut() {
       this.isFlipped = false;
       this.$emit('ic-flipbox-flip', {flip: this.isFlipped});
     },
-  }
+    recalcContainer() {
+      this.childStyle['position'] = 'static';
+      Vue.nextTick().then(() => {
+        let rect = this.$el.getBoundingClientRect();
+        this.containerWidth = rect.width;
+        this.containerHeight = rect.height;
+        this.childStyle['position'] = 'absolute';
+      });
+    }
+  },
+  mounted() {
+    this.recalcContainer();
+  },
 }
 </script>
 
 <style scoped>
   .flipbox {
+    display: block;
     position: relative;
   }
 
-  .flipbox .flipbox-front {
-    position: absolute;
-    top: 0;
+  .flipbox .flipbox-face {
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    transition: all .4s ease-in-out;
+  }
+
+  .flipbox .flipbox-face.flipbox-face-front {
     z-index: 900;
     transform: rotateX(0deg) rotateY(0deg);
-    transform-style: preserve-3d;
-    backface-visibility: hidden;
-    transition: all .4s ease-in-out;
   }
 
-  .flipbox .flipbox-back {
-    position: absolute;
-    top: 0;
+  .flipbox .flipbox-face.flipbox-face-back {
     z-index: 1000;
     transform: rotateY(-180deg);
-    transform-style: preserve-3d;
-    backface-visibility: hidden;
-    transition: all .4s ease-in-out;
   }
 
-  .flipbox.flipbox-flipped .flipbox-front {
+  .flipbox.flipbox-flipped .flipbox-face-front {
     z-index: 900;
     transform: rotateY(180deg);
   }
 
-  .flipbox.flipbox-flipped .flipbox-back {
+  .flipbox.flipbox-flipped .flipbox-face-back {
     z-index: 1000;
     transform: rotateX(0deg);
   }
