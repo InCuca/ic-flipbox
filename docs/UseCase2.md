@@ -19,10 +19,10 @@ new Vue({
       </button>
       <p>Flipped? {{cardOpen}}</p>
       <ic-flipbox
-      :flip="cardOpen"
-      @ic-flipbox-flip="onCardFlip">
-        <div slot="front-content">My Front Content</div>
-        <div slot="back-content">My Back Content</div>
+        :flip="cardOpen"
+        @ic-flipbox-flip="onCardFlip">
+          <div slot="front-content">My Front Content</div>
+          <div slot="back-content">My Back Content</div>
       </ic-flipbox>
     </div>
   `
