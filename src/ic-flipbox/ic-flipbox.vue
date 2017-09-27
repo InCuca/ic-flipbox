@@ -2,9 +2,9 @@
   <div
     :class="containerClasses"
     :style="containerStyle"
-    @mouseenter="onMouseEnter"
-    @mouseleave="onMouseLeave">
-    <div :style="childStyle" class="flipbox-face flipbox-face-front">
+    @mouseenter="doFlip(true)"
+    @mouseleave="doFlip(false)">
+    <div :style="childStyle" ref="faceFront" class="flipbox-face flipbox-face-front">
       <slot name="front-content"></slot>
     </div>
     <div :style="childStyle" class="flipbox-face flipbox-face-back">
@@ -15,6 +15,7 @@
 
 <script>
 import Vue from 'vue';
+import throttle from './throttle.js';
 
 /**
  * Component documentation
@@ -27,6 +28,7 @@ export default {
       containerWidth: null,
       containerHeight: null,
       childStyle: {},
+      transitionListener: null,
     }
   },
   props: {
@@ -67,14 +69,10 @@ export default {
     },
   },
   methods: {
-    onMouseEnter() {
-      this.isFlipped = true;
+    doFlip: throttle(function(flip) {
+      this.isFlipped = flip;
       this.$emit('ic-flipbox-flip', {flip: this.isFlipped});
-    },
-    onMouseLeave() {
-      this.isFlipped = false;
-      this.$emit('ic-flipbox-flip', {flip: this.isFlipped});
-    },
+    }, 400),
     recalcContainer() {
       this.childStyle['position'] = 'static';
       Vue.nextTick().then(() => {
