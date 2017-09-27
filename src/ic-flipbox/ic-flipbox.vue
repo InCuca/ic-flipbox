@@ -68,7 +68,6 @@ export default {
   },
   methods: {
     onMouseEnter() {
-      console.trace('here');
       this.isFlipped = true;
       this.$emit('ic-flipbox-flip', {flip: this.isFlipped});
     },
