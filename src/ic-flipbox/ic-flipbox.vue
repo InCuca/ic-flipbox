@@ -69,10 +69,15 @@ export default {
     },
   },
   methods: {
-    doFlip: throttle(function(flip) {
+    // FIXME: throttle does not work well using multiple components
+    // doFlip: throttle(function(flip) {
+    //   this.isFlipped = flip;
+    //   this.$emit('ic-flipbox-flip', {flip: this.isFlipped});
+    // }, 400),
+    doFlip: function(flip) {
       this.isFlipped = flip;
       this.$emit('ic-flipbox-flip', {flip: this.isFlipped});
-    }, 400),
+    },
     recalcContainer() {
       this.childStyle['position'] = 'static';
       Vue.nextTick().then(() => {
