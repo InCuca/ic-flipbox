@@ -1,5 +1,5 @@
 const webpack = require.main.require('webpack')
-const {name, version} = require('./package.json')
+const version = require('./package.json').version
 
 module.exports = {
   webpack: {
