@@ -127,7 +127,7 @@ export default {
   .flipbox .flipbox-face {
     transform-style: preserve-3d;
     backface-visibility: hidden;
-    transition: all .4s ease-in-out;
+    transition: all .4s cubic-bezier(.2,.85,.4,1.275);
   }
 
   .flipbox .flipbox-face.flipbox-face-front {
