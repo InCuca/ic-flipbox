@@ -80,7 +80,7 @@ export default {
     },
     recalcContainer() {
       this.childStyle['position'] = 'static';
-      Vue.nextTick().then(() => {
+      Vue.nextTick(() => {
         let childRects = Array
           .from(this.$el.children)
           .map(el => el.getBoundingClientRect());
