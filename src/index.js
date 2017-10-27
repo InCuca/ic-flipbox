@@ -1,4 +1,5 @@
 import Component from './ic-flipbox/ic-flipbox.vue';
+import 'babel-polyfill';
 
 Component.install = Vue => Vue.component(Component.name, Component);
 Component.version = process.env.VERSION;

@@ -19,10 +19,11 @@
     "dist/"
   ],
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
     "vue": "^2.4.1"
   },
   "devDependencies": {
-    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-env": "^1.6.1",
     "eslint": "^3.17.1",
     "eslint-plugin-vue": "beta",
     "vue-cli": "^2.8.2",
