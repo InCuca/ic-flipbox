@@ -14,7 +14,6 @@
 </template>
 
 <script>
-import Vue from 'vue';
 import throttle from './throttle.js';
 
 /**
@@ -80,7 +79,7 @@ export default {
     },
     recalcContainer() {
       this.childStyle['position'] = 'static';
-      Vue.nextTick(() => {
+      this.$nextTick(() => {
         let childRects = Array
           .from(this.$el.children)
           .map(el => el.getBoundingClientRect());

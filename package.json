@@ -30,5 +30,12 @@
     "vue-styleguidist": "^1.2.5",
     "vue-webpack-loaders": "^1.0.6",
     "webpack": "^3.1.0"
+  },
+  "bit": {
+    "env": {
+      "compiler": "bit.envs/bundlers/vue@2.6.15"
+    },
+    "componentsDefaultDirectory": "components/{name}",
+    "packageManager": "npm"
   }
 }
