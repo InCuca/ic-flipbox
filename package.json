@@ -1,6 +1,6 @@
 {
   "name": "ic-flipbox",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A flipabble element",
   "author": "Walker Leite <walker@incuca.com.br>",
   "main": "dist/index.js",
